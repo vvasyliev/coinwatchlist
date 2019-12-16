@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-import { Hot } from 'styled-icons/crypto/Hot';
-import { IPriceStore } from '~stores/priceStore';
-import { formatPrice } from '~utils/utils';
+import { Tusd } from 'styled-icons/crypto/Tusd';
+import { formatPrice } from '~/utils/utils';
+import { IPriceStore } from '~/types/stores';
 
-export interface IHeader {
+export interface IHeaderProps {
   PriceStore: IPriceStore;
 }
 
-const HoloToken = styled(Hot)`
+const HoloToken = styled(Tusd)`
   color: white;
   width: 32px;
   margin-right: 0.5rem;
@@ -48,9 +48,8 @@ const OverviewItem = styled.span`
   color: ${({ theme }) => theme.text};
 `;
 
-@inject('PriceStore')
 @observer
-class Header extends Component<IHeader> {
+class Header extends Component<IHeaderProps> {
   componentDidMount() {
     const { PriceStore } = this.props;
     PriceStore.getOverview();

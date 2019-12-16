@@ -10,8 +10,9 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "./source/types"],
     "paths": {
-      "~*": ["./source/*"]
+      "~/*": ["./source/*"]
     }
   }
 }

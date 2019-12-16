@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Provider } from 'mobx-react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import Header from '~/components/Header/Header';
+import LeaderBoard from '~/pages/LeaderBoard/LeaderBoard';
 import PriceStore from '~/stores/PriceStore';
 import theme from '~/theme.json';
 
@@ -23,8 +23,8 @@ class App extends Component {
     return (
       <Provider {...stores}>
         <ThemeProvider theme={theme.dark}>
+          <LeaderBoard />
           <GlobalStyle />
-          <Header />
         </ThemeProvider>
       </Provider>
     );
