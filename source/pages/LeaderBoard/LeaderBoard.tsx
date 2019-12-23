@@ -1,41 +1,56 @@
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 
+import CryptoList from '~/components/CryptoList/CryptoList';
+import { IStore, ICrypto } from '~/types/reducers';
+import { getCryptosData } from '~/actions/market';
 import Header from '~/components/Header/Header';
-import { IPriceStore } from '~/types/stores';
 
 export interface ILeaderBoardProps {
-  PriceStore: IPriceStore;
+  cryptos: ICrypto[];
+  getCryptos: () => void;
 }
 
 export interface ILeaderBoardState {
   page: number;
 }
 
-@inject('PriceStore')
-@observer
 class LeaderBoard extends Component<ILeaderBoardProps, ILeaderBoardState> {
   readonly state = {
     page: 1
   };
 
   componentDidMount() {
-    const { PriceStore } = this.props;
-    PriceStore.getCoins();
+    const { getCryptos } = this.props;
+    getCryptos();
   }
 
   handlePageChange = (nextPage: number): void => this.setState({ page: nextPage });
 
   render() {
-    const { PriceStore } = this.props;
-    console.info(PriceStore);
+    const { cryptos } = this.props;
 
     return (
       <div>
-        <Header PriceStore={PriceStore} />
+        <Header />
+        <CryptoList cryptos={cryptos} />
       </div>
     );
   }
 }
 
-export default LeaderBoard;
+const mapStateToProps = ({ market }: IStore) => {
+  return {
+    cryptos: market.cryptos,
+    isLoading: market.isLoading
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    getCryptos: () => dispatch(getCryptosData())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeaderBoard);

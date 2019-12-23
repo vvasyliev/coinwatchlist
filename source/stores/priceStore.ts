@@ -1,12 +1,11 @@
 import { observable, action } from 'mobx';
 
 import CryptoApiService from '~/services/CryptoApiService';
-import { IPriceStore } from '~/types/stores';
 
 class PriceStore implements IPriceStore {
   @observable isLoading = false;
   @observable overview = {};
-  coins = [];
+  @observable coins = [];
 
   @action
   getOverview() {
@@ -21,7 +20,6 @@ class PriceStore implements IPriceStore {
   getCoins() {
     this.isLoading = true;
     CryptoApiService.getCoins().then((data: any) => {
-      console.info('data: ', data);
       this.coins = data;
       this.isLoading = false;
     });

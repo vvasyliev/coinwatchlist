@@ -1,5 +1,5 @@
 import BaseClient from '~/services/BaseClient';
-import { COINPAPRIKA_BASE_API_URL } from '~/utils/consts';
+import { COINPAPRIKA_BASE_API_URL } from '~/utils/const';
 import { IBaseClientConfig } from '~/types/services';
 
 class CryptoApiService extends BaseClient {

@@ -1,10 +1,14 @@
+import { Store } from 'redux';
+import { Provider } from 'react-redux';
 import normalize from 'styled-normalize';
 import React, { Component } from 'react';
-import { Provider } from 'mobx-react';
+import { ConnectedRouter } from 'connected-react-router';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
+import configureStore, { history } from '~/configureStore';
 import LeaderBoard from '~/pages/LeaderBoard/LeaderBoard';
-import PriceStore from '~/stores/PriceStore';
+import Routes from '~/components/Routes/Routes';
+import { IStore } from '~/types/reducers';
 import theme from '~/theme.json';
 
 const GlobalStyle = createGlobalStyle`
@@ -16,15 +20,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const stores = { PriceStore };
+const store: Store<IStore> = configureStore();
 
 class App extends Component {
   render() {
     return (
-      <Provider {...stores}>
+      <Provider store={store}>
         <ThemeProvider theme={theme.dark}>
-          <LeaderBoard />
-          <GlobalStyle />
+          <ConnectedRouter history={history}>
+            <Routes />
+            <GlobalStyle />
+          </ConnectedRouter>
         </ThemeProvider>
       </Provider>
     );
