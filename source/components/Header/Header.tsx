@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Typography } from 'antd';
-
+import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { Tusd } from 'styled-icons/crypto/Tusd';
+
+import { Text } from '~/components/common';
+import { LEADER_BOARD_ROUTE } from '~/utils/const';
 import { getOverviewData } from '~/actions/market';
 import { IStore, IOverview } from '~/types/reducers';
 import { formatNumber, formatPrice } from '~/utils/util';
@@ -15,8 +17,6 @@ export interface IHeaderProps {
   getOverview: () => void;
 }
 
-const { Text } = Typography;
-
 const HoloToken = styled(Tusd)`
   color: white;
   width: 32px;
@@ -26,8 +26,10 @@ const HoloToken = styled(Tusd)`
 const HeaderContainer = styled.header`
   display: flex;
   flex-direction: column;
-  color: ${({ theme }) => theme.text};
-  background-color: ${({ theme }) => theme.main};
+  color: ${({ theme }) => theme.primaryTextColor};
+  background-color: ${({ theme }) => theme.primaryBackgroundColor};
+  border-bottom: 1px solid;
+  border-bottom-color: ${({ theme }) => theme.dimmedBackgroundColor};
 `;
 
 const LogoSection = styled.div`
@@ -45,79 +47,84 @@ const OverviewStrip = styled.section`
   display: flex;
   padding: 0.5rem;
   overflow: scroll;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid;
+  border-bottom-color: ${({ theme }) => theme.dimmedBackgroundColor};
 `;
 
 const OverviewStripItem = styled.span`
   white-space: nowrap;
   font-size: 12px;
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.primaryTextColor};
 
   &:not(:last-child) {
     margin-right: 1rem;
   }
 `;
 
-class Header extends Component<IHeaderProps> {
-  componentDidMount() {
-    const { getOverview } = this.props;
+const Header: React.FC<IHeaderProps> = ({ getOverview, overview }) => {
+  // retreive overview data once and never update
+  useEffect(() => {
     getOverview();
-  }
+  }, []);
 
-  render() {
-    const { overview, isLoading } = this.props;
-    const {
-      bitcoin_dominance_percentage,
-      cryptocurrencies_number,
-      market_cap_usd,
-      market_cap_change_24h,
-      volume_24h_usd
-    } = overview;
+  const {
+    active_cryptocurrencies,
+    markets,
+    total_market_cap,
+    total_volume,
+    market_cap_percentage,
+    market_cap_change_percentage_24h_usd
+  } = overview;
 
-    if (isLoading) return <div>loading...</div>;
-
-    return (
-      <HeaderContainer>
-        <OverviewStrip>
-          <OverviewStripItem>
-            <Text>
-              BTC Dominance: <strong>{formatNumber(bitcoin_dominance_percentage)}%</strong>
-            </Text>
-          </OverviewStripItem>
-          <OverviewStripItem>
-            <Text>
-              Cryptocurrencies: <strong>{formatNumber(cryptocurrencies_number)}</strong>
-            </Text>
-          </OverviewStripItem>
-          <OverviewStripItem>
-            <Text>
-              Total Marketcap: <strong>{formatPrice(market_cap_usd, '$')}</strong>
-            </Text>
-          </OverviewStripItem>
-          <OverviewStripItem>
-            <Text>
-              Marketcap change (24h): <strong>{formatNumber(market_cap_change_24h)}%</strong>
-            </Text>
-          </OverviewStripItem>
-          <OverviewStripItem>
-            <Text>
-              Volume (24h): <strong>{formatPrice(volume_24h_usd, '$')}</strong>
-            </Text>
-          </OverviewStripItem>
-        </OverviewStrip>
-        <LogoSection>
+  return (
+    <HeaderContainer>
+      <OverviewStrip>
+        <OverviewStripItem>
+          <Text>
+            BTC Dominance: <strong>{formatNumber(market_cap_percentage?.btc / 100, 'percent', 2)}</strong>
+          </Text>
+        </OverviewStripItem>
+        <OverviewStripItem>
+          <Text>
+            Cryptocurrencies: <strong>{formatNumber(active_cryptocurrencies)}</strong>
+          </Text>
+        </OverviewStripItem>
+        <OverviewStripItem>
+          <Text>
+            Exchanges: <strong>{formatNumber(markets)}</strong>
+          </Text>
+        </OverviewStripItem>
+        <OverviewStripItem>
+          <Text>
+            Total Marketcap: <strong>{formatPrice(total_market_cap?.btc)}</strong>
+          </Text>
+        </OverviewStripItem>
+        <OverviewStripItem>
+          <Text>
+            Marketcap change (24h):
+            <strong> {formatNumber(market_cap_change_percentage_24h_usd / 100, 'percent', 2)}</strong>
+          </Text>
+        </OverviewStripItem>
+        <OverviewStripItem>
+          <Text>
+            Volume (24h): <strong>{formatPrice(total_volume?.btc)}</strong>
+          </Text>
+        </OverviewStripItem>
+      </OverviewStrip>
+      <LogoSection>
+        <Link to={LEADER_BOARD_ROUTE}>
           <HoloToken />
           <Heading>CoinWatchList</Heading>
-        </LogoSection>
-      </HeaderContainer>
-    );
-  }
-}
+        </Link>
+      </LogoSection>
+    </HeaderContainer>
+  );
+};
 
-const mapStateToProps = ({ market }: IStore) => {
+const mapStateToProps = (state: IStore) => {
   return {
-    overview: market.overview,
-    isLoading: market.isLoading
+    overview: state.market.overview,
+    isLoading: state.market.isLoading
   };
 };
 

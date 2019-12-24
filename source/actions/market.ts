@@ -2,24 +2,18 @@ import { Dispatch } from 'redux';
 
 import CryptoApiService from '~/services/CryptoApiService';
 import {
-  SET_MARKET_LOADING,
+  GET_MARKET_OVERVIEW,
   GET_MARKET_OVERVIEW_SUCCESS,
-  SET_MARKET_ERROR,
-  GET_MARKET_CRYPTOS_SUCCESS
+  GET_MARKET_OVERVIEW_FAILURE,
+  GET_MARKET_CRYPTOS,
+  GET_MARKET_CRYPTOS_SUCCESS,
+  GET_MARKET_CRYPTOS_FAILURE
 } from '~/utils/const';
-import { IOverview, ICrypto } from '~/types/reducers';
+import { IOverview, ICrypto, IGetCryptosParams } from '~/types/reducers';
 
-export function setMarketError(hasError: boolean) {
+export function getMarketOverview() {
   return {
-    type: SET_MARKET_ERROR,
-    hasError
-  };
-}
-
-export function setMarketLoading(isLoading: boolean) {
-  return {
-    type: SET_MARKET_LOADING,
-    isLoading
+    type: GET_MARKET_OVERVIEW
   };
 }
 
@@ -30,6 +24,18 @@ export function getMarketOverviewSuccess(overview: IOverview) {
   };
 }
 
+export function getMarketOverviewFailure() {
+  return {
+    type: GET_MARKET_OVERVIEW_FAILURE
+  };
+}
+
+export function getMarketCryptos() {
+  return {
+    type: GET_MARKET_CRYPTOS
+  };
+}
+
 export function getMarketCryptosSuccess(cryptos: ICrypto[]) {
   return {
     type: GET_MARKET_CRYPTOS_SUCCESS,
@@ -37,28 +43,40 @@ export function getMarketCryptosSuccess(cryptos: ICrypto[]) {
   };
 }
 
-export function getOverviewData(): any {
-  return (dispatch: Dispatch) => {
-    dispatch(setMarketLoading(true));
-
-    CryptoApiService.getOverview()
-      .then((data: any) => {
-        dispatch(setMarketLoading(false));
-        dispatch(getMarketOverviewSuccess(data));
-      })
-      .catch(() => dispatch(setMarketError(true)));
+export function getMarketCryptosFailure() {
+  return {
+    type: GET_MARKET_CRYPTOS_FAILURE
   };
 }
 
-export function getCryptosData(): any {
+export function getOverviewData(): any {
   return (dispatch: Dispatch) => {
-    dispatch(setMarketLoading(true));
+    dispatch(getMarketOverview());
 
-    CryptoApiService.getCoins()
+    CryptoApiService.getOverview()
+      .then(({ data }: any) => {
+        dispatch(getMarketOverviewSuccess(data));
+      })
+      .catch(() => dispatch(getMarketOverviewFailure()));
+  };
+}
+
+export function getCryptosData({
+  vs_currency = 'usd',
+  ids,
+  order,
+  per_page,
+  page,
+  sparkline,
+  price_change_percentage
+}: IGetCryptosParams): any {
+  return (dispatch: Dispatch) => {
+    dispatch(getMarketCryptos());
+
+    CryptoApiService.getCoins({ vs_currency, ids, order, per_page, page, sparkline, price_change_percentage })
       .then((data: any) => {
-        dispatch(setMarketLoading(false));
         dispatch(getMarketCryptosSuccess(data));
       })
-      .catch(() => dispatch(setMarketError(true)));
+      .catch(() => dispatch(getMarketCryptosFailure()));
   };
 }

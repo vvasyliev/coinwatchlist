@@ -1,7 +1,18 @@
 {
   "light": {},
   "dark": {
-    "main": "#151728",
-    "text": "#f3f3f3"
+    "primaryBackgroundColor": "#151728",
+    "dimmedBackgroundColor": "rgba(69, 69, 69, 0.5)",
+    "primaryTextColor": "#bbb",
+    "dimmedTextColor": "rgba(243, 243, 243, 0.5)",
+    "primaryGreen": "#3D9970",
+    "primaryRed": "#FF4136",
+    "breakpoints": {
+      "xs": 0,
+      "sm": "576px",
+      "md": "768px",
+      "lg": "992px",
+      "xl": "1200px"
+    }
   }
 }

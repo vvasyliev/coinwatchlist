@@ -1,15 +1,14 @@
+import React from 'react';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import normalize from 'styled-normalize';
-import React, { Component } from 'react';
 import { ConnectedRouter } from 'connected-react-router';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import configureStore, { history } from '~/configureStore';
-import LeaderBoard from '~/pages/LeaderBoard/LeaderBoard';
-import Routes from '~/components/Routes/Routes';
-import { IStore } from '~/types/reducers';
 import theme from '~/theme.json';
+import { IStore } from '~/types/reducers';
+import Routes from '~/components/Routes/Routes';
+import configureStore, { history } from '~/configureStore';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -18,23 +17,25 @@ const GlobalStyle = createGlobalStyle`
   *, *:before, *:after {
     box-sizing: border-box;
   }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
 
 const store: Store<IStore> = configureStore();
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <ThemeProvider theme={theme.dark}>
-          <ConnectedRouter history={history}>
-            <Routes />
-            <GlobalStyle />
-          </ConnectedRouter>
-        </ThemeProvider>
-      </Provider>
-    );
-  }
-}
+const App: React.FC = () => {
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={theme.dark}>
+        <ConnectedRouter history={history}>
+          <Routes />
+        </ConnectedRouter>
+        <GlobalStyle />
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default App;

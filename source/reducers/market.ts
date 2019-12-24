@@ -1,8 +1,10 @@
 import {
-  SET_MARKET_LOADING,
-  SET_MARKET_ERROR,
+  GET_MARKET_OVERVIEW,
   GET_MARKET_OVERVIEW_SUCCESS,
+  GET_MARKET_OVERVIEW_FAILURE,
+  GET_MARKET_CRYPTOS,
   GET_MARKET_CRYPTOS_SUCCESS,
+  GET_MARKET_CRYPTOS_FAILURE,
   GET_MARKET_CRYPTO_SUCCESS
 } from '~/utils/const';
 import { IMarket, IMarketAction } from '~/types/reducers';
@@ -11,25 +13,37 @@ const initialState: IMarket = { overview: {}, cryptos: [], isLoading: false, has
 
 export default function getMarketData(state = initialState, action: IMarketAction) {
   switch (action.type) {
-    case SET_MARKET_ERROR:
+    case GET_MARKET_OVERVIEW:
       return {
         ...state,
-        hasError: action.hasError
-      };
-    case SET_MARKET_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading
+        isLoading: true
       };
     case GET_MARKET_OVERVIEW_SUCCESS:
       return {
         ...state,
-        overview: action.overview
+        overview: action.overview,
+        isLoading: false
+      };
+    case GET_MARKET_OVERVIEW_FAILURE:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case GET_MARKET_CRYPTOS:
+      return {
+        ...state,
+        isLoading: true
       };
     case GET_MARKET_CRYPTOS_SUCCESS:
       return {
         ...state,
-        cryptos: action.cryptos
+        cryptos: action.cryptos,
+        isLoading: false
+      };
+    case GET_MARKET_CRYPTOS_FAILURE:
+      return {
+        ...state,
+        isLoading: false
       };
     case GET_MARKET_CRYPTO_SUCCESS:
       return {

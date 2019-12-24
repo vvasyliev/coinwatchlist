@@ -30,11 +30,13 @@ class BaseClient implements IBaseClient {
     this.config = Object.assign({}, this.config, config);
   }
 
-  public request(method: Method, url: string, data?: {}, headers?: any): AxiosPromise {
+  public request(method: Method, url: string, data?: any, headers?: any, params?: any): AxiosPromise {
     const requestHeaders: any = this._getHeaders(headers);
     const requestUrl: string = this._getURL(url);
     const requestConfig: AxiosRequestConfig = {
       method,
+      data,
+      params,
       url: requestUrl,
       headers: requestHeaders
     };
