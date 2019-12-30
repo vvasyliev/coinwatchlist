@@ -1,5 +1,5 @@
-import { Action } from "redux";
-import { RouterState } from "connected-react-router";
+import { Action } from 'redux';
+import { RouterState } from 'connected-react-router';
 
 export interface IStore {
   router: RouterState;
@@ -123,7 +123,7 @@ export type MarketOrderType =
   | 'volume_asc'
   | 'volume_desc';
 
-export interface IGetCryptosParams  {
+export interface IGetCryptosParams {
   vs_currency: string;
   ids?: string[];
   order?: MarketOrderType;

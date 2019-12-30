@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTable, useSortBy, HeaderGroup, Row, Cell, Column } from 'react-table';
-
 // @TODO: check these options, should be tested on being really optional
 // and see if pagination has become customizable enough to do it here (useTokenPagination?)
 export interface ITableParams {

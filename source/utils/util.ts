@@ -23,5 +23,5 @@ export const formatPrice = (number: number, currency: string = 'usd'): string =>
 };
 
 // alternative to lodash _.times helper function
-export const times = (times: number, iteratee = i => i) =>
+export const times = (times: number, iteratee = (i: any) => i) =>
   Array.from({ length: times }).map((_, i) => iteratee(i));

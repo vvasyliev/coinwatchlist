@@ -8,6 +8,7 @@
     "incremental": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "baseUrl": ".",
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types", "./source/types"],
