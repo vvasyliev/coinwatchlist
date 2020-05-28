@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Loader5 } from 'styled-icons/remix-fill/Loader5';
+import { Loader5 } from '@styled-icons/remix-fill/Loader5';
 
 export interface ILoaderProps {
   size?: number;
@@ -20,6 +20,6 @@ const Spinner = styled(Loader5)`
   height: ${({ size }) => size}px;
 `;
 
-const Loader: React.FC<ILoaderProps> = ({ size }) => <Spinner size={size} />;
+const Loader: React.FC<ILoaderProps> = ({ size = 12 }) => <Spinner size={size} />;
 
 export default Loader;

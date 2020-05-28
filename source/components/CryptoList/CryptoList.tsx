@@ -2,9 +2,9 @@ import { Column, CellProps } from 'react-table';
 import React, { useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { Expand } from 'styled-icons/boxicons-regular/Expand';
-import { LeftArrow } from 'styled-icons/boxicons-regular/LeftArrow';
-import { RightArrow } from 'styled-icons/boxicons-regular/RightArrow';
+import { Expand } from '@styled-icons/boxicons-regular/Expand';
+import { LeftArrow } from '@styled-icons/boxicons-regular/LeftArrow';
+import { RightArrow } from '@styled-icons/boxicons-regular/RightArrow';
 
 import { ICrypto } from '~/types/reducers';
 import { formatPrice, formatNumber } from '~/utils/util';
@@ -169,7 +169,7 @@ const CryptoList: React.FC<ICryptoListProps> = ({
   handlePageChange,
   isLoading
 }) => {
-  // the react-table wants these memorized for some reason
+  // the react-table lib requires these to be memorized for some reason
   const columns = useMemo<Column[]>(
     () => [
       { Header: 'Rank', accessor: 'market_cap_rank', sortType: 'basic' },
@@ -190,7 +190,7 @@ const CryptoList: React.FC<ICryptoListProps> = ({
     []
   );
 
-  // the react-table wants these memorized for some reason
+  // the react-table lib requires these to be memorized for some reason
   const data = useMemo<ICrypto[]>(() => cryptos, [cryptos]);
 
   return (

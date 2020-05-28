@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react';
-import { Tusd } from 'styled-icons/crypto/Tusd';
+import { Tusd } from '@styled-icons/crypto/Tusd';
 
 import { Text } from '~/components/common';
 import { LEADER_BOARD_ROUTE } from '~/utils/const';
@@ -62,7 +62,6 @@ const OverviewStripItem = styled.span`
 `;
 
 const Header: React.FC<IHeaderProps> = ({ getOverview, overview }) => {
-  // retreive overview data once and never update
   useEffect(() => {
     getOverview();
   }, []);
