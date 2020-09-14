@@ -17,7 +17,7 @@ export interface IHeaderProps {
   getOverview: () => void;
 }
 
-const HoloToken = styled(Tusd)`
+const LogoIcon = styled(Tusd)`
   color: white;
   width: 32px;
   margin-right: 0.5rem;
@@ -110,12 +110,12 @@ const Header: React.FC<IHeaderProps> = ({ getOverview, overview }) => {
           </Text>
         </OverviewStripItem>
       </OverviewStrip>
-      <LogoSection>
-        <Link to={LEADER_BOARD_ROUTE}>
-          <HoloToken />
+      <Link to={LEADER_BOARD_ROUTE}>
+        <LogoSection>
+          <LogoIcon />
           <Heading>CoinWatchList</Heading>
-        </Link>
-      </LogoSection>
+        </LogoSection>
+      </Link>
     </HeaderContainer>
   );
 };
