@@ -14,7 +14,9 @@ export interface IAllCryptosPageProps {
   getCryptos: (params: IGetCryptosParams) => void;
 }
 
-const AllCryptos = styled.section``;
+const AllCryptos = styled.section`
+  min-height: 100%;
+`;
 
 class AllCryptosPage extends Component<IAllCryptosPageProps> {
   render() {

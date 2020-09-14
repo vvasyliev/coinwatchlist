@@ -28,6 +28,7 @@ export interface ILeaderBoardPageState {
 }
 
 const LeaderBoard = styled.section`
+  min-height: 100%;
   background-color: ${({ theme }) => theme.primaryBackgroundColor};
 `;
 

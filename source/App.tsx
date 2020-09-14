@@ -13,7 +13,12 @@ import configureStore, { history } from '~/configureStore';
 const GlobalStyle = createGlobalStyle`
   ${normalize}
   @import url('https://rsms.me/inter/inter.css');
-  html { font-family: 'Inter', sans-serif; }
+  html {
+    font-family: 'Inter', sans-serif;
+  }
+  html, body, main {
+    height: 100%;
+  }
   *, *:before, *:after {
     box-sizing: border-box;
   }

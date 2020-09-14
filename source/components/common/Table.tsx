@@ -86,7 +86,7 @@ const Table: React.FC<ITableProps> = ({ columns, data, isSortable }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable(
     {
       columns,
-      data
+      data,
     },
     ...tableParams
   );
