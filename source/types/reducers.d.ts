@@ -7,7 +7,7 @@ export interface IStore {
 }
 
 export interface IMarket {
-  overview: IOverview;
+  overview: IOverview | {};
   cryptos: ICrypto[];
   isLoading: boolean;
   hasError: boolean;

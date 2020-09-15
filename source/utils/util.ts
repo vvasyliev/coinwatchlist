@@ -5,10 +5,12 @@ export const formatNumber = (
 ): string => {
   const options: Intl.NumberFormatOptions = {
     style,
-    minimumFractionDigits
+    minimumFractionDigits,
   };
 
-  return number?.toLocaleString('en-US', options);
+  if (!number) return 0..toLocaleString('en-US', options);
+
+  return number.toLocaleString('en-US', options);
 };
 
 export const formatPrice = (number: number, currency: string = 'usd'): string => {
@@ -16,10 +18,12 @@ export const formatPrice = (number: number, currency: string = 'usd'): string =>
     style: 'currency',
     currency,
     minimumFractionDigits: 2,
-    maximumFractionDigits: 20
+    maximumFractionDigits: 20,
   };
 
-  return number?.toLocaleString('en-US', options);
+  if (!number) return 0..toLocaleString('en-US', options);
+
+  return number.toLocaleString('en-US', options);
 };
 
 // alternative to lodash _.times helper function

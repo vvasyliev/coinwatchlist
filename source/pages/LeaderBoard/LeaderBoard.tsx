@@ -41,11 +41,12 @@ class LeaderBoardPage extends Component<ILeaderBoardPageProps, ILeaderBoardPageS
   constructor(props: ILeaderBoardPageProps) {
     super(props);
 
-    const parsedSearch = qs.parse(props.search, { ignoreQueryPrefix: true });
+    // @FIXME: type
+    const parsedSearch: any = qs.parse(props.search, { ignoreQueryPrefix: true });
 
     this.state = {
       page: parseInt(parsedSearch.page) || 1,
-      cryptosPerPage: parseInt(parsedSearch.cryptosPerPage) || 100
+      cryptosPerPage: parseInt(parsedSearch.cryptosPerPage) || 100,
     };
   }
 
@@ -61,7 +62,7 @@ class LeaderBoardPage extends Component<ILeaderBoardPageProps, ILeaderBoardPageS
     const { page, cryptosPerPage } = this.state;
 
     if (!isEqual(this.state, prevState)) {
-      push({ path: { search: qs.stringify({ page, cryptosPerPage }) }));
+      push({ path: { search: qs.stringify({ page, cryptosPerPage }) } });
       getCryptos({ vs_currency: 'usd', page, per_page: cryptosPerPage });
     }
   }
@@ -79,7 +80,7 @@ class LeaderBoardPage extends Component<ILeaderBoardPageProps, ILeaderBoardPageS
       cryptosPerPage,
       cryptosTotal,
       cryptos,
-      handlePageChange: this.handlePageChange
+      handlePageChange: this.handlePageChange,
     };
 
     return (
@@ -100,14 +101,14 @@ const mapStateToProps = (state: IStore) => {
     search: state.router.location.search,
     overview: state.market.overview,
     cryptos: state.market.cryptos,
-    isLoading: state.market.isLoading
+    isLoading: state.market.isLoading,
   };
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     push: ({ path, state }: any) => dispatch(push(path, state)),
-    getCryptos: (params: IGetCryptosParams) => dispatch(getCryptosData(params))
+    getCryptos: (params: IGetCryptosParams) => dispatch(getCryptosData(params)),
   };
 };
 
